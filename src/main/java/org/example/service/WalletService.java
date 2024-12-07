@@ -21,9 +21,9 @@ public class WalletService {
     public void processTransaction(UUID walletId, OperationType operationType, BigDecimal amount) throws InsufficientFundsException {
         Wallet wallet = walletRepository.findById(walletId).orElseThrow(() -> new WalletNotFoundException("Wallet not found"));
 
-        if (operationType.equals("DEPOSIT")) {
+        if (operationType.equals(OperationType.DEPOSIT)) {
             wallet.setBalance(wallet.getBalance().add(amount));
-        } else if (operationType.equals("WITHDRAW")) {
+        } else if (operationType.equals(OperationType.WITHDRAW)) {
             if (wallet.getBalance().compareTo(amount) < 0) {
                 throw new InsufficientFundsException("Not enough funds");
             }

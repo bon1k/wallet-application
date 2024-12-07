@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.WalletRequest;
 import org.example.exception.WalletNotFoundException;
 import org.example.model.Wallet;
 import org.example.service.WalletService;
@@ -18,16 +19,16 @@ public class WalletController {
     @Autowired
     private WalletService walletService;
 
-//    @PostMapping
-//    public ResponseEntity<?> createWallet(@RequestBody WalletRequest request) {
-//        try {
-//            walletService.processTransaction(request.getWalletId(), request.getOperationType(),
-//                    request.getAmount());
-//            return ResponseEntity.ok().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
-//    }
+    @PostMapping
+    public ResponseEntity<?> createHandWallet(@RequestBody WalletRequest request) {
+        try {
+            walletService.processTransaction(request.getWalletId(), request.getOperationType(),
+                    request.getAmount());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
     @GetMapping("/{walletId}")
     public ResponseEntity<Wallet> getWallet(@PathVariable UUID walletId) {
@@ -39,7 +40,7 @@ public class WalletController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Wallet> createWallet(@RequestBody Map<String, Object> requestBody) {
         BigDecimal initialBalance = new BigDecimal(requestBody.get("initialBalance").toString());
         Wallet wallet = walletService.createWallet(initialBalance);
