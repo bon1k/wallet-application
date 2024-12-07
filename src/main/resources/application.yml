@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://database:5432/wallet_db
+    username: wallet_user
+    password: wallet_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate # Убедитесь, что схема БД соответствует модели
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true # Отображать SQL-запросы в консоли
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG # Логирование SQL-запросов
